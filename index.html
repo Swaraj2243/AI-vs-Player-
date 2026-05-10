@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI vs Player</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="game-container">
+
+    <h1>🤖 AI vs Player</h1>
+
+    <h2>Choose Your Move</h2>
+
+    <div class="choices">
+        <button class="rock" onclick="playGame('Rock')">🪨 Rock</button>
+
+        <button class="paper" onclick="playGame('Paper')">📄 Paper</button>
+
+        <button class="scissors" onclick="playGame('Scissors')">✂️ Scissors</button>
+    </div>
+
+    <div class="ai-thinking" id="thinking"></div>
+
+    <div class="result" id="result"></div>
+
+    <div class="scoreboard">
+        <div>
+            Player: <span id="playerScore">0</span>
+        </div>
+
+        <div>
+            AI: <span id="aiScore">0</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+let playerScore = 0;
+let aiScore = 0;
+
+function playGame(playerChoice){
+
+    const choices = ["Rock", "Paper", "Scissors"];
+
+    document.getElementById("thinking").innerText = "AI is thinking...";
+
+    setTimeout(() => {
+
+        const aiChoice = choices[Math.floor(Math.random() * 3)];
+
+        let result = "";
+
+        // DRAW
+        if(playerChoice === aiChoice){
+            result = "🤝 It's a Draw!";
+        }
+
+        // PLAYER WINS
+        else if(
+            (playerChoice === "Rock" && aiChoice === "Scissors") ||
+            (playerChoice === "Paper" && aiChoice === "Rock") ||
+            (playerChoice === "Scissors" && aiChoice === "Paper")
+        ){
+            result = "🔥 You Win!";
+            playerScore++;
+        }
+
+        // AI WINS
+        else{
+            result = "💀 AI Wins!";
+            aiScore++;
+        }
+
+        // SHOW RESULT
+        document.getElementById("result").innerHTML = `
+            You chose <b>${playerChoice}</b><br>
+            AI chose <b>${aiChoice}</b><br><br>
+            ${result}
+        `;
+
+        // UPDATE SCORES
+        document.getElementById("playerScore").innerText = playerScore;
+        document.getElementById("aiScore").innerText = aiScore;
+
+        document.getElementById("thinking").innerText = "";
+
+    }, 1000);
+
+}
+
+</script>
+
+</body>
+</html>
